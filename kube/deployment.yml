@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mk8sdjango
+  labels:
+    app: mk8sdjango
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mk8sdjango
+  template:
+    metadata:
+      labels:
+        app: mk8sdjango
+    spec:
+      containers:
+      - name: mk8sdjango
+        image: docker.io/library/mk8sdjango_web:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
