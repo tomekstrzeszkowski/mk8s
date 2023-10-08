@@ -14,5 +14,3 @@
 
 ## Managing kubernetes
 Run the dashboard `microk8s.dashboard-proxy`
-
-![Screenshot from 2023-10-07 18-10-40.png](..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-10-07%2018-10-40.png)

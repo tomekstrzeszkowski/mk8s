@@ -14,16 +14,15 @@ from pathlib import Path
 import environ
 import os
 
-env = environ.Env(DEBUG = (bool, False))
+env = environ.FileAwareEnv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-print(os.path.join(BASE_DIR, '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tsa=xn!$ec2$5wpcvjik3&k!jp7w$oqty34q1zurr+absfn5c('
+SECRET_KEY = 'microk8s-tsa=xn!1#$#(@sdfk2DFS&29k!jp7w$oqty34q1zurr+absfn5c('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,9 +79,8 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": env.db(),
-    #'sqlite': {
-    "default": {
+    "default": env.db(),
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
