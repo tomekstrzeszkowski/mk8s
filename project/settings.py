@@ -17,7 +17,7 @@ import os
 env = environ.FileAwareEnv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env-deploy'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,7 +25,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = 'microk8s-tsa=xn!1#$#(@sdfk2DFS&29k!jp7w$oqty34q1zurr+absfn5c('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG").lower() in ['true', '1', 't', 'y', 'yes', 'on']
 
 ALLOWED_HOSTS = ["*"]
 

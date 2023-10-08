@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: mk8sdjango
-        image: docker.io/library/mk8sdjango_web:v4
+        image: docker.io/library/mk8sdjango_web:v5
         imagePullPolicy: Never
         ports:
         - containerPort: 8000
