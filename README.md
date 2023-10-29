@@ -20,3 +20,9 @@
 
 ### Managing kubernetes
 Run the dashboard `microk8s.dashboard-proxy`
+
+Running app:
+![Screenshot from 2023-10-29 12-20-40](https://github.com/tomekstrzeszkowski/mk8sdjango/assets/40120335/2ce1402d-1dea-45af-b0b8-aad6fb5b38bf)
+
+dashboard:
+![Screenshot from 2023-10-29 12-21-48](https://github.com/tomekstrzeszkowski/mk8sdjango/assets/40120335/ea28fa4a-8bc0-4f30-904d-8628aa8605c2)
