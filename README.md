@@ -15,8 +15,8 @@
 `microk8s ctr image import mk8sdjango_web.tar`
 - Optional: verify the entry `microk8s ctr images ls | rg django`
  - Apply deployment 
-`microk8s kubectl apply -f kube/deployment.yml`
- - If it's the first deploy apply service `microk8s kubectl apply -f kube/service.yml`
+`microk8s kubectl apply -f kube/django-deployment.yml`
+ - If it's the first deploy apply service `microk8s kubectl apply -f kube/django-service.yml`
 
 ### Managing kubernetes
 Run the dashboard `microk8s.dashboard-proxy`
