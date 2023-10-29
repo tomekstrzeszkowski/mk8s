@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: default
+data:
+  nginx.conf: |-
+    events {}
+    http {
+      server {
+        listen 80;
+        server_name localhost;
+    
+        location / {
+          #include proxy_params;
+          proxy_pass http://unix:/run/gunicorn.sock;
+        }
+    
+        location /static/ {
+          autoindex on;
+          alias /usr/share/nginx/static/;
+        }
+      }
+    }

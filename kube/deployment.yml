@@ -20,23 +20,4 @@ spec:
         imagePullPolicy: Never
         ports:
           - containerPort: 8000
-        volumeMounts:
-          - mountPath: /usr/share/nginx/static
-            name: nginx-static
-        env:
-          - name: STATIC_ROOT_PATH
-            value: "/usr/share/nginx/static"
-      initContainers:
-      - name: static
-        image: docker.io/library/mk8sdjango_web:v8
-        env:
-          - name: STATIC_ROOT_PATH
-            value: "/usr/share/nginx/static"
-        volumeMounts:
-        - mountPath: /usr/share/nginx/static
-          name: nginx-static
-        command: [ python, manage.py, collectstatic, --noinput ]
-      volumes:
-      - name: nginx-static
-        emptyDir:
-          sizeLimit: 500Mi
+            name: gunicorn

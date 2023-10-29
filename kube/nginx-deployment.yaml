@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-server
+  #namespace: default
+  labels:
+    app: nginx-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-server
+  template:
+    metadata:
+      labels:
+        app: nginx-server
+    spec:
+      containers:
+        - name: nginx-server
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - name: nginx-conf
+              subPath: nginx.conf
+              mountPath: /etc/nginx/nginx.conf
+              readOnly: true
+            - name: staticfiles
+              mountPath: /usr/share/nginx/static
+              readOnly: true
+      initContainers:
+        - name: collectstatic
+          image: docker.io/library/mk8sdjango_web:v8
+          env:
+            - name: STATIC_ROOT_PATH
+              value: "/usr/share/nginx/static"
+          command: ['python', 'manage.py', 'collectstatic', '--no-input']
+          volumeMounts:
+            - name: staticfiles
+              mountPath: /usr/share/nginx/static
+              readOnly: false
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-config
+        - name: staticfiles
+          emptyDir:
+            sizeLimit: 500Mi
+
