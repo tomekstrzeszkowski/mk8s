@@ -7,6 +7,9 @@ data:
   nginx.conf: |-
     events {}
     http {
+      default_type application/octet-stream;
+      include /etc/nginx/mime.types;
+    
       server {
         listen 80;
         server_name localhost;
