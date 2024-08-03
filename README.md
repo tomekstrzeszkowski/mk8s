@@ -1,22 +1,19 @@
-# Docker
-`docker compose up --build`
-
-# Migration for django app
-
-`docker compose run web python manage.py migrate`
-
 # Kubernetes deployement 
-1. build image `docker build -t <img_name>:v<bumped_version:int> .`
+1. Build image `docker build -t <img_name>:v<bumped_version:int> .`
 2. Edit `./kube/<name>-deployment.yml` image and put the new version
 3. Save local image
 ```
 docker save <img_name>:v<bumped_version:int> > <img_name>.tar
 ```
 4. Import image into microk8s registry
-`microk8s ctr image import <img_name>.tar`
+```
+microk8s ctr image import <img_name>.tar
+```
 - Optional: verify the entry `microk8s ctr images ls | rg <img_name>`
 5. Apply deployment 
-`microk8s kubectl apply -f ./kube/<name>-deployment.yml`
+```
+microk8s kubectl apply -f ./kube/<name>-deployment.yml
+```
  - If it's the first deploy apply service `microk8s kubectl apply -f kube/<name>-service.yml`
 
 ## Example for django app
@@ -28,10 +25,14 @@ docker save <img_name>:v<bumped_version:int> > <img_name>.tar
 docker save mk8sdjango_web:v<bumped_version:int> > mk8sdjango_web.tar
 ```
 4. 
-`microk8s ctr image import mk8sdjango_web.tar`
+```
+microk8s ctr image import mk8sdjango_web.tar
+```
 - `microk8s ctr images ls | rg django`
 5. Apply deployment 
-`microk8s kubectl apply -f ./kube/django-deployment.yml`
+```
+microk8s kubectl apply -f ./kube/django-deployment.yml
+```
 
  # Kubernetes deployment go `mk8sdjango/gin`
  The process is like in django app just use: 
