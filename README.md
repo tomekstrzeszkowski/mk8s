@@ -34,8 +34,8 @@ microk8s ctr image import mk8sdjango_web.tar
 microk8s kubectl apply -f ./kube/django-deployment.yml
 ```
 
- # Kubernetes deployment go `mk8sdjango/gin`
- The process is like in django app just use: 
+## Example for gin
+ The process is like in django app, go to `mk8sdjango/gin` and follow the steps for deployments, where: 
   - `<img_name>` -> `gin_web`
   - `<name>` -> `gin`
 
