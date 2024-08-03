@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mk8sdjango
+  namespace: backend-django
   labels:
     app: mk8sdjango
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mk8sdjango
-        image: docker.io/library/mk8sdjango_web:v8
+        image: docker.io/library/mk8sdjango_web:v1
         imagePullPolicy: Never
         ports:
           - containerPort: 8000

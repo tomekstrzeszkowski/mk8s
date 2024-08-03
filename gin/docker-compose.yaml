@@ -1,0 +1,6 @@
+services:
+  library-go-backend:
+    build: .
+    ports:
+      - 8080:8080
+      - 2345:2345

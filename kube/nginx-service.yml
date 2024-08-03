@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: nginx-server-service
+  namespace: backend-django
 spec:
   selector:
     app: nginx-server

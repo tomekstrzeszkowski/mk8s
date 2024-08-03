@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: django-service
+  namespace: backend-django
 spec:
   selector:
     app: mk8sdjango
