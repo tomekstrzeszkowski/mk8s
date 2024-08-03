@@ -64,7 +64,7 @@ or delete pods
 # Running new services
 
 ## Postgres
-Run `microk8s kubectl apply -f ./kube/postgres-[name].yaml` in this order:
+Run `microk8s kubectl apply -f ./kube/postgres-<name>.yaml` in this order:
  1. `volume`
  2. `volume-claim`
 
