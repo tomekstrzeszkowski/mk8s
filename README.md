@@ -8,8 +8,10 @@
 # Kubernetes deployement 
 1. build image `docker build -t <img_name>:v<bumped_version:int> .`
 2. Edit `./kube/<name>-deployment.yml` image and put the new version
-3. save local image
-```docker save <img_name>:v<bumped_version:int> > <img_name>.tar```
+3. Save local image
+```
+docker save <img_name>:v<bumped_version:int> > <img_name>.tar
+```
 4. Import image into microk8s registry
 `microk8s ctr image import <img_name>.tar`
 - Optional: verify the entry `microk8s ctr images ls | rg <img_name>`
@@ -22,7 +24,9 @@
 1. `docker build -t mk8sdjango_web:v<bumped_version:int> .`
 2. Edit `./kube/django-deployment.yml` 
 3. 
-```docker save mk8sdjango_web:v<bumped_version:int> > mk8sdjango_web.tar```
+```
+docker save mk8sdjango_web:v<bumped_version:int> > mk8sdjango_web.tar
+```
 4. 
 `microk8s ctr image import mk8sdjango_web.tar`
 - `microk8s ctr images ls | rg django`
@@ -50,7 +54,9 @@ dashboard:
 
 When running Django app you might get 502 error. To solve that issue restart deployment
  - `microk8s kubectl rollout restart -n backend-django deployment mk8sdjango`
+
 or delete pods
+
  - `microk8s kubectl delete -n backend-django pod mk8sdjango-[django-pod-id]` 
 
 
@@ -60,11 +66,13 @@ or delete pods
 Run `microk8s kubectl apply -f ./kube/postgres-[name].yaml` in this order:
  1. `volume`
  2. `volume-claim`
-then run the rest in any order
+
+Then run the rest in any order
+
  - `configmap`
  - `deployment`
  - `service`
 
 ## Django App
  - Edit `.env-deploy` file and put PG's IP
- - build image and deploy new version
+ - Build image and deploy new version
