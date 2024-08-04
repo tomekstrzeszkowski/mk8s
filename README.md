@@ -1,43 +1,27 @@
 # Kubernetes deployement 
-1. Build image `docker build -t <img_name>:v<bumped_version:int> .`
-2. Edit `./kube/<name>-deployment.yml` image and put the new version
+1. For simplicity create variable for version `export version=v<bumped_version:int> name=<name:str>`
+1. Build image `docker build -t $name:$version .`
+2. Edit `./kube/$name-deployment.yml` image and put the new version
 3. Save local image
 ```
-docker save <img_name>:v<bumped_version:int> > <img_name>.tar
+docker save $name:$version > image.tar
 ```
 4. Import image into microk8s registry
 ```
-microk8s ctr image import <img_name>.tar
+microk8s ctr image import image.tar
 ```
-- Optional: verify the entry `microk8s ctr images ls | rg <img_name>`
+- Optional: verify the entry `microk8s ctr images ls | rg $name`
 5. Apply deployment 
 ```
-microk8s kubectl apply -f ./kube/<name>-deployment.yml
+microk8s kubectl apply -f ./kube/$name-deployment.yml
 ```
- - If it's the first deploy apply service `microk8s kubectl apply -f kube/<name>-service.yml`
+ - If it's the first deploy apply service `microk8s kubectl apply -f kube/$name-service.yml`
 
 ## Example for django app
-
-1. `docker build -t mk8sdjango_web:v<bumped_version:int> .`
-2. Edit `./kube/django-deployment.yml` 
-3. 
-```
-docker save mk8sdjango_web:v<bumped_version:int> > mk8sdjango_web.tar
-```
-4. 
-```
-microk8s ctr image import mk8sdjango_web.tar
-```
-- `microk8s ctr images ls | rg django`
-5. Apply deployment 
-```
-microk8s kubectl apply -f ./kube/django-deployment.yml
-```
+ - `export name=django version=v<bumped_version>`
 
 ## Example for gin
- The process is like in django app, go to `mk8sdjango/gin` and follow the steps for deployments, where: 
-  - `<img_name>` -> `gin_web`
-  - `<name>` -> `gin`
+ - `export name=gin version=v<bumped_version>`
 
 * note: endpoint for `content_tags` is not supported yet, due to missing db connection.
 
@@ -50,30 +34,11 @@ Running app:
 dashboard:
 ![Screenshot from 2023-10-29 12-21-48](https://github.com/tomekstrzeszkowski/mk8sdjango/assets/40120335/ea28fa4a-8bc0-4f30-904d-8628aa8605c2)
 
-
-# Known issues
-
-When running Django app you might get 502 error. To solve that issue restart deployment
- - `microk8s kubectl rollout restart -n backend-django deployment mk8sdjango`
-
-or delete pods
-
- - `microk8s kubectl delete -n backend-django pod mk8sdjango-[django-pod-id]` 
-
-
 # Running new services
 
 ## Postgres
-Run `microk8s kubectl apply -f ./kube/postgres-<name>.yaml` in this order:
- 1. `volume`
- 2. `volume-claim`
-
-Then run the rest in any order
-
+Run `microk8s kubectl apply -f ./kube/postgres-<name>.yaml` in any order:
+ - `volume`
  - `configmap`
  - `deployment`
  - `service`
-
-## Django App
- - Edit `.env-deploy` file and put PG's IP
- - Build image and deploy new version
