@@ -1,20 +1,20 @@
 # Kubernetes deployement 
 1. For simplicity create variable for version `export version=v<bumped_version:int> name=<name:str>`
-1. Build image 
+2. Build image 
 ```
 docker build -t $name:$version .
 ```
-2. Edit `./kube/$name-deployment.yml` image and put the new version
-3. Save local image
+3. Edit `./kube/$name-deployment.yml` image and put the new version
+4. Save local image
 ```
 docker save $name:$version > image.tar
 ```
-4. Import image into microk8s registry
+5. Import image into microk8s registry
 ```
 microk8s ctr image import image.tar
 ```
 - Optional: verify the entry `microk8s ctr images ls | rg $name`
-5. Apply deployment 
+6. Apply deployment 
 ```
 microk8s kubectl apply -f ./kube/$name-deployment.yml
 ```
