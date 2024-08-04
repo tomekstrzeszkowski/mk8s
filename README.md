@@ -1,6 +1,9 @@
 # Kubernetes deployement 
 1. For simplicity create variable for version `export version=v<bumped_version:int> name=<name:str>`
-1. Build image `docker build -t $name:$version .`
+1. Build image 
+```
+docker build -t $name:$version .
+```
 2. Edit `./kube/$name-deployment.yml` image and put the new version
 3. Save local image
 ```
@@ -17,10 +20,10 @@ microk8s kubectl apply -f ./kube/$name-deployment.yml
 ```
  - If it's the first deploy apply service `microk8s kubectl apply -f kube/$name-service.yml`
 
-## Example for django app
+## Deployment variables for django app
  - `export name=django version=v<bumped_version>`
 
-## Example for gin
+## Deployment variables for gin
  - `export name=gin version=v<bumped_version>`
 
 * note: endpoint for `content_tags` is not supported yet, due to missing db connection.
@@ -37,7 +40,8 @@ dashboard:
 # Running new services
 
 ## Postgres
-Run `microk8s kubectl apply -f ./kube/postgres-<name>.yaml` in any order:
+Run `microk8s kubectl apply -f ./kube/postgres-<name>.yaml`:
+ - `secrets`
  - `volume`
  - `configmap`
  - `deployment`

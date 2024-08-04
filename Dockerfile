@@ -1,6 +1,6 @@
 FROM python:3.12
 # show the stdout and stderr streams right in the command line instead of getting buffered.
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 RUN mkdir /django-postgres-kube
 WORKDIR /django-postgres-kube
 COPY . .
