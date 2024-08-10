@@ -31,7 +31,17 @@ microk8s kubectl apply -f ./kube/$name-deployment.yml
 # Managing kubernetes
 Run the dashboard `microk8s.dashboard-proxy`
 
-Running app:
+# Running app:
+
+## Known issue
+
+Sometime when pods are starting you might see django connection issues and nginx error message.
+To solve that issue restart pods:
+
+```
+kubectl rollout restart -n backend-django deployment mk8sdjango
+```
+
 ![Screenshot from 2023-10-29 12-20-40](https://github.com/tomekstrzeszkowski/mk8sdjango/assets/40120335/2ce1402d-1dea-45af-b0b8-aad6fb5b38bf)
 
 dashboard:
