@@ -25,6 +25,11 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb
+          env:
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-database
+                  key: DATABASE_PASSWORD
       volumes:
         - name: postgredb
           persistentVolumeClaim:

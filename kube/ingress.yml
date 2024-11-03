@@ -7,6 +7,7 @@ items:
       name: http-ingress
       namespace: backend-django
     spec:
+      ingressClassName: public
       rules:
       - http:
           paths:
@@ -34,6 +35,7 @@ items:
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
     spec:
+      ingressClassName: public
       rules:
       - http:
           paths:

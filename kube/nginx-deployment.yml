@@ -30,7 +30,7 @@ spec:
               readOnly: true
       initContainers:
         - name: collectstatic
-          image: docker.io/library/mk8sdjango_web:v8
+          image: docker.io/library/django_web:v1
           env:
             - name: STATIC_ROOT_PATH
               value: "/usr/share/nginx/static"

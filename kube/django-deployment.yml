@@ -17,8 +17,9 @@ spec:
     spec:
       containers:
       - name: mk8sdjango
-        image: docker.io/library/mk8sdjango_web:v1
+        image: docker.io/library/django_web:v1
         imagePullPolicy: Never
+        command: ['python', 'manage.py', 'runserver', '0.0.0.0:8000']
         ports:
           - containerPort: 8000
             name: gunicorn

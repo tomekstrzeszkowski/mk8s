@@ -9,14 +9,15 @@ data:
     http {
       default_type application/octet-stream;
       include /etc/nginx/mime.types;
-    
+
       server {
         listen 80;
         server_name localhost;
     
         location / {
-          #include proxy_params;
-          proxy_pass http://unix:/run/gunicorn.sock;
+          proxy_pass http://django-service; # change to gunicorn http://unix:/run/gunicorn.sock;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
         }
     
         location /static/ {
