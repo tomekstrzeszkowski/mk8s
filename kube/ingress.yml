@@ -9,7 +9,8 @@ items:
     spec:
       ingressClassName: public
       rules:
-      - http:
+      - host: k8s.localhost
+        http:
           paths:
           - path: /
             pathType: Prefix
@@ -37,7 +38,8 @@ items:
     spec:
       ingressClassName: public
       rules:
-      - http:
+      - host: k8s.localhost
+        http:
           paths:
           - path: /pbuf(/|$)(.*)  # skip `/pbuf` prefix internally
             pathType: Prefix

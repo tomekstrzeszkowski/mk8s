@@ -1,3 +1,7 @@
+# Deploying Simple Applications with Kubernetes
+
+This project aims to provide a comprehensive guide on how to deploy simple web applications using MicroK8s, a lightweight Kubernetes distribution, focusing on two popular frameworks: Django for Python and Gin for Go. By exploring both technologies, developers can gain insights into container orchestration with Kubernetes while also understanding how to build and deploy applications in different programming environments.
+
 # Before first run
  - Enable ingress addon which will add nginx ingress controller
  ```
@@ -10,34 +14,38 @@ microk8s enable ingress
  - Create all services, ingress, secret and other items
  
 # New app version deployement 
-1. For simplicity create variable for version `export version=v<bumped_version:int> name=<name:gin|django>`
-2. Build image, for gin use `./gin/.`
+1. For simplicity create variable for version 
 ```
-docker build -t ${name}_web:$version .
+export version=v<int> name=<string:["django" | "gin"]> path=<string:["." | "./gin/."]>
 ```
-3. Edit `./kube/${name}-deployment.yml` image and put the new version
-4. Save local image
+2. Build image
 ```
-docker save ${name}_web:$version > image_tmp.tar
+docker build -t ${name}_web:$version ${path:-.}
 ```
-* for django Edit `./kub/nginx-deployment.yml` as well
-5. Import image into microk8s registry
+3. Import image into microk8s registry
 ```
 microk8s ctr image import image_tmp.tar
 ```
 - Optional: verify the entry `microk8s ctr images ls | rg $name`
+4. Edit `./kube/${name}-deployment.yml` image and put the new version
+5. Save local image
+```
+docker save ${name}_web:$version > image_tmp.tar
+```
+* for django Edit `./kub/nginx-deployment.yml` as well
 6. Apply deployment 
 ```
 microk8s kubectl apply -f ./kube/${name}-deployment.yml
 ```
 
 ## Deployment variables for django app
+ - `unset path`
  - `export name=django version=v<bumped_version>`
 
 ## Deployment variables for gin
- - `export name=gin version=v<bumped_version>`
+ - `export name=gin version=v<bumped_version> path=./gin/.`
 
-* note: endpoint for `content_tags` is not supported yet, due to missing db connection.
+* note: some endpoints are supported yet, due to missing db connection.
 
 # Managing kubernetes
 Run the dashboard `microk8s.dashboard-proxy`
@@ -46,7 +54,7 @@ Run the dashboard `microk8s.dashboard-proxy`
 
 ## Known issue
 
-Sometime when pods are starting you might see django connection issues and nginx error message.
+Sometimes when pods are starting you might see django connection issues and nginx error message.
 To solve that issue restart pods:
 
 ```
@@ -67,3 +75,10 @@ Run `microk8s kubectl apply -f ./kube/postgres-<name>.yml`:
  - `configmap`
  - `deployment`
  - `service`
+
+Change the default credentials.
+
+# What's next?
+ - helm documentation
+ - gunicorn for django app
+ - DB for gin app
